@@ -1,5 +1,6 @@
 #importing modules
 from tkinter import *
+import re
 
 #main class
 class game():
@@ -20,3 +21,29 @@ class game():
     
     def update(self):
         self.screen.update()
+    
+    @classmethod
+    def createCharacter(src):
+        return Character(src)
+
+#character class
+class Character():
+    def __init__(self, path, type="static"):
+        self.x = 0
+        self.y = 0
+        if type == "static":
+            if re.matches(r".*\.(png|jpg)", path):
+                self.path = path
+            else:
+                raise ValueError(path + " is not an image.")
+        
+    
+    def place(self, **kwargs):
+        try:
+            self.x = kwargs["x"]
+        except KeyError:
+            pass
+        try:
+            self.y = kwargs["y"]
+        except KeyError:
+            pass

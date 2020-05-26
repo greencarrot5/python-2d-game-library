@@ -16,15 +16,15 @@ main = Game.createCharacter("maincharacter.png")
 main.place(x=150, y=150)
 
 #handling keypress
-@onkeypress("left")
+@game.onkeypress("left")
 def to_left():
     main.move(-5, 0)
 
-@onkeypress("right")
+@game.onkeypress("right")
 def to_right():
     main.move(5, 0)
 
-@onkeypress("up")
+@game.onkeypress("up")
 def jump():
     main.jump()
 

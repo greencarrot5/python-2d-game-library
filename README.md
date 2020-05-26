@@ -43,4 +43,4 @@ game.add(main)
 game.run()
 ```
 
-So far, the only thing you can find in this project, is the beginning of the game-class.
+So far, I've created the parts of the game class, the onkeypress handler, and the character class.

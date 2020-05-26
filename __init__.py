@@ -13,6 +13,7 @@ class Game():
         self.screen.title(title)
         self.canvas = Canvas(self.screen, width=self.with, height=self.height)
         self.canvas.pack()
+        self.canvas.bind_all("<Key>", self.react_to_key)
         
         self.characters = []
         self.blocks = []
@@ -33,9 +34,39 @@ class Game():
             object.canvas = self.canvas
             self.blocks.append(object)
     
+    #when key is pressed
+    def react_to_key(self, event):
+        key = event.keysym
+        if key == "Left":
+            self.onkeyleft()
+        elif key == "Right":
+            self.onkeyright()
+        elif key == "Up":
+            self.onkeyup()
+    
+    #keybinds
+    def onkeyleft(self):
+        pass
+    def onkeyright(self):
+        pass
+    def onkeyup(self):
+        pass
+    
     @classmethod
     def createCharacter(src):
         return Character(src)
+    
+    #decorator
+    def onkeypress(self, key):
+        def bind(func):
+            if key == "left":
+                self.onkeyleft = func
+            elif key == "right":
+                self.onkeyright = func
+            elif key == "up":
+                self.onkeyup = func
+            else:
+                raise ModuleError("Python2d doesn't support the key: " + key)
 
 #character class
 class Character():

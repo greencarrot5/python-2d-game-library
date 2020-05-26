@@ -1,5 +1,6 @@
 #importing modules
 from tkinter import *
+from PIL import Image, ImageTk
 import re
 
 #main class
@@ -29,6 +30,7 @@ class Game():
     def add(self, object):
         if isInstance(object, Character):
             object.canvas = self.canvas
+            object.draw()
             self.characters.append(object)
         elif isInstance(object, Block):
             object.canvas = self.canvas
@@ -79,6 +81,8 @@ class Character():
         if type == "static":
             if re.matches(r".*\.(png|jpg)", path):
                 self.path = path
+                self.img = Image.open(self.path)
+                self.tatras = ImageTk.PhotoImage(self.img)
             else:
                 raise ValueError(path + " is not an image.")
         
@@ -96,6 +100,10 @@ class Character():
     def move(self, moveX, moveY):
         if self.canvas:
             self.canvas.move(self.image, moveX, moveY)
+    
+    def draw(self):
+        if self.canvas:
+            self.image = self.canvas.create_image(self.x, self.y, anchor=NW, image=self.tatras)
 
 #block class
 class Block():

@@ -3,7 +3,7 @@ from tkinter import *
 import re
 
 #main class
-class game():
+class Game():
     def __init__(self, title, width=100, height=100, bg="lightblue"):
         self.screen = Tk()
         self.title = title
@@ -13,6 +13,9 @@ class game():
         self.screen.title(title)
         self.canvas = Canvas(self.screen, width=self.with, height=self.height)
         self.canvas.pack()
+        
+        self.characters = []
+        self.blocks = []
     
     def title(self, screentitle):
         if screentitle:
@@ -21,6 +24,14 @@ class game():
     
     def update(self):
         self.screen.update()
+    
+    def add(self, object):
+        if isInstance(object, Character):
+            object.canvas = self.canvas
+            self.characters.append(object)
+        elif isInstance(object, Block):
+            object.canvas = self.canvas
+            self.blocks.append(object)
     
     @classmethod
     def createCharacter(src):
@@ -31,6 +42,7 @@ class Character():
     def __init__(self, path, type="static"):
         self.x = 0
         self.y = 0
+        self.canvas = None
         if type == "static":
             if re.matches(r".*\.(png|jpg)", path):
                 self.path = path
@@ -47,3 +59,12 @@ class Character():
             self.y = kwargs["y"]
         except KeyError:
             pass
+    
+    def move(self, moveX, moveY):
+        if self.canvas:
+            self.canvas.move(self.image, moveX, moveY)
+
+#block class
+class Block():
+    def __init__(self):
+        pass

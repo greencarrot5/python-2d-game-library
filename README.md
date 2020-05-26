@@ -4,7 +4,8 @@ A python library that helps making 2d games.
 Python already has a great built-in library for graphics, tkinter, but there aren't many tools to create a 2d game. This library will contain functions to write simple games in a few lines of code.
 # goal
 The goal is to make it easy for everyone to create 2d games in python, without having to calculate everthing yourself, so you have something like this:
-'''python
+
+```python
 
 from python2d import Game
 
@@ -40,6 +41,6 @@ game.add(main)
 
 #running the game
 game.run()
-'''
+```
 
 So far, the only thing you can find in this project, is the beginning of the game-class.

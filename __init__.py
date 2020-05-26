@@ -67,6 +67,7 @@ class Game():
                 self.onkeyup = func
             else:
                 raise ModuleError("Python2d doesn't support the key: " + key)
+        return func
 
 #character class
 class Character():

@@ -18,6 +18,7 @@ class Game():
         
         self.characters = []
         self.blocks = []
+        self.running = False
     
     def title(self, screentitle):
         if screentitle:
@@ -30,11 +31,19 @@ class Game():
     def add(self, object):
         if isInstance(object, Character):
             object.canvas = self.canvas
-            object.draw()
             self.characters.append(object)
         elif isInstance(object, Block):
             object.canvas = self.canvas
             self.blocks.append(object)
+    
+    def run(self):
+        for character in self.characters:
+            character.draw()
+        for block in self.blocks:
+            block.draw()
+        self.running = True
+        while self.running:
+            self.canvas.update()
     
     #when key is pressed
     def react_to_key(self, event):
@@ -107,5 +116,27 @@ class Character():
 
 #block class
 class Block():
-    def __init__(self):
-        pass
+    def __init__(self, **kwargs):
+        try:
+            self.color = kwargs["color"]
+        except KeyError:
+            self.color = "black"
+        try:
+            self.width = kwargs["width"]
+        except KeyError:
+            self.width = 100
+        try:
+            self.height = kwargs["height"]
+        except KeyError:
+            self.height = 100
+        self.x = 0
+        self.y = 0
+        self.canvas = None
+    
+    def place(self, x=0, y=0):
+        self.x = x
+        self.y = y
+    
+    def draw(self):
+        if self.canvas:
+            self.graph = self.canvas.create_rectangle(self.x, self.y, self.width, self.height, fill=self.color)

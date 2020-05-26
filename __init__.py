@@ -2,6 +2,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 import re
+import time
 
 #main class
 class Game():
@@ -18,6 +19,8 @@ class Game():
         
         self.characters = []
         self.blocks = []
+        
+        self.gravity = 0
         self.running = False
     
     def title(self, screentitle):
@@ -26,7 +29,7 @@ class Game():
             return self.screen.title(screentitle)
     
     def update(self):
-        self.screen.update()
+        self.canvas.update()
     
     def add(self, object):
         if isInstance(object, Character):
@@ -43,7 +46,12 @@ class Game():
             block.draw()
         self.running = True
         while self.running:
+            for character in self.characters:
+                character.move(0, character.movementY)
+                #TODO: let character stop falling if it is standing on a block
+                character.movementY += self.gravity
             self.canvas.update()
+            time.sleep(0.01)
     
     #when key is pressed
     def react_to_key(self, event):
@@ -86,6 +94,7 @@ class Character():
     def __init__(self, path, type="static"):
         self.x = 0
         self.y = 0
+        self.movementY = 0
         self.canvas = None
         if type == "static":
             if re.matches(r".*\.(png|jpg)", path):
@@ -113,6 +122,10 @@ class Character():
     def draw(self):
         if self.canvas:
             self.image = self.canvas.create_image(self.x, self.y, anchor=NW, image=self.tatras)
+    
+    #game methods
+    def jump(self):
+        self.movementY = -15
 
 #block class
 class Block():

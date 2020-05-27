@@ -5,6 +5,8 @@ from PIL import Image, ImageTk
 import re
 import time
 
+players = 0
+
 #main class
 class Game():
     def __init__(self, title, width=100, height=100, bg="lightblue"):
@@ -14,6 +16,7 @@ class Game():
         self.width = width
         self.height = height
         self.screen.title(title)
+        self.screenType = "fixed"
         self.canvas = Canvas(self.screen, width=self.width, height=self.height)
         self.canvas.pack()
         self.canvas.create_rectangle(0, 0, self.width, self.height, fill=self.bg)
@@ -91,6 +94,14 @@ class Game():
                 raise ModuleError("Python2d doesn't support the key: " + key)
             return func
         return bind
+
+class Player(Character):
+    def __init__(self, path, type="static"):
+        if players == 0:
+            super().__init__(path, type)
+            players += 1
+        else:
+            raise ModuleError("You can only define one player.")
 
 #character class
 class Character():

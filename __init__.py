@@ -34,10 +34,10 @@ class Game():
         self.canvas.update()
     
     def add(self, object):
-        if isInstance(object, Character):
+        if isinstance(object, Character):
             object.canvas = self.canvas
             self.characters.append(object)
-        elif isInstance(object, Block):
+        elif isinstance(object, Block):
             object.canvas = self.canvas
             self.blocks.append(object)
     
@@ -51,7 +51,8 @@ class Game():
             for character in self.characters:
                 character.move(0, character.movementY)
                 #TODO: let character stop falling if it is standing on a block
-                character.movementY += self.gravity
+                if not collideTopOfAnyOf(character.x, character.y, character.width, character.height, self.blocks):
+                    character.movementY += self.gravity
             self.canvas.update()
             time.sleep(0.01)
     
@@ -74,7 +75,7 @@ class Game():
         pass
     
     @classmethod
-    def createCharacter(src):
+    def createCharacter(cls, src):
         return Character(src)
     
     #decorator
@@ -99,7 +100,7 @@ class Character():
         self.movementY = 0
         self.canvas = None
         if type == "static":
-            if re.matches(r".*\.(png|jpg)", path):
+            if re.match(r".*\.(png|jpg)", path):
                 self.path = path
                 self.img = Image.open(self.path)
                 self.width, self.height = self.img.size
@@ -162,3 +163,9 @@ def collide(x1, y1, length1, height1, x2, y2, length2, height2):
     collideX = (x1 > x2 and x1 < x2 + length2) or (x1 + length1 > x2 and x1 + length1 < x2 + length2) or (x1 < x2 and x1 + length1 > x2 + length2)
     collideY = (y1 > y2 and y1 < y2 + height2) or (y1 + height1 > y2 and y1 + height1 < y2 + height2) or (y1 < y2 and y1 + height1 > y2 + height2)
     return collideX and collideY
+
+def collideTopOfAnyOf(x1, y1, length1, height1, arr):
+    result = False
+    for item in arr:
+        result = result or collide(x1, y1, length1, height1, item.x, item.y, item.width, 10)
+    return result

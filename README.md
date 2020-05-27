@@ -45,7 +45,7 @@ game.run()
 
 # Updates
 
-- 27/05/2020: Most things discussed in goal work.
+- 05/27/2020: Most things discussed in goal work.
 
 # Coming soon
 

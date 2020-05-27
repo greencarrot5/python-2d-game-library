@@ -3,7 +3,7 @@ A python library that helps making 2d games.
 # description
 Python already has a great built-in library for graphics, tkinter, but there aren't many tools to create a 2d game. This library will contain functions to write simple games in a few lines of code.
 # goal
-The goal is to make it easy for everyone to create 2d games in python, without having to calculate everthing yourself, so you have something like this:
+The goal is to make it easy for everyone to create 2d games in python, without having to calculate everthing yourself. Here are the most of the current possibilities:
 
 ```python
 
@@ -43,4 +43,11 @@ game.add(main)
 game.run()
 ```
 
-So far, I've created the parts of the game class, the onkeypress handler, and the character class.
+# Updates
+
+- 27/05/2020: Most things discussed in goal work.
+
+# Coming soon
+
+- Scrolling screen
+- Moving blocks

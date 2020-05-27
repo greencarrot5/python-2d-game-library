@@ -1,6 +1,6 @@
 #importing modules
 from tkinter import *
-from storage import database
+from .storage import database
 from PIL import Image, ImageTk
 import re
 import time
@@ -14,8 +14,9 @@ class Game():
         self.width = width
         self.height = height
         self.screen.title(title)
-        self.canvas = Canvas(self.screen, width=self.with, height=self.height)
+        self.canvas = Canvas(self.screen, width=self.width, height=self.height)
         self.canvas.pack()
+        self.canvas.create_rectangle(0, 0, self.width, self.height, fill=self.bg)
         self.canvas.bind_all("<Key>", self.react_to_key)
         
         self.characters = []

@@ -101,6 +101,7 @@ class Character():
             if re.matches(r".*\.(png|jpg)", path):
                 self.path = path
                 self.img = Image.open(self.path)
+                self.width, self.height = self.img.size
                 self.tatras = ImageTk.PhotoImage(self.img)
             else:
                 raise ValueError(path + " is not an image.")
@@ -157,4 +158,6 @@ class Block():
 
 #collision function
 def collide(x1, y1, length1, height1, x2, y2, length2, height2):
-    pass
+    collideX = (x1 > x2 and x1 < x2 + length2) or (x1 + length1 > x2 and x1 + length1 < x2 + length2) or (x1 < x2 and x1 + length1 > x2 + length2)
+    collideY = (y1 > y2 and y1 < y2 + height2) or (y1 + height1 > y2 and y1 + height1 < y2 + height2) or (y1 < y2 and y1 + height1 > y2 + height2)
+    return collideX and collideY

@@ -1,5 +1,6 @@
 #importing modules
 from tkinter import *
+from storage import database
 from PIL import Image, ImageTk
 import re
 import time
@@ -153,3 +154,7 @@ class Block():
     def draw(self):
         if self.canvas:
             self.graph = self.canvas.create_rectangle(self.x, self.y, self.width, self.height, fill=self.color)
+
+#collision function
+def collide(x1, y1, length1, height1, x2, y2, length2, height2):
+    pass

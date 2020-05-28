@@ -20,10 +20,14 @@ class Game():
         self.canvas = Canvas(self.screen, width=self.width, height=self.height)
         self.canvas.pack()
         self.canvas.create_rectangle(0, 0, self.width, self.height, fill=self.bg)
-        self.canvas.bind_all("<Key>", self.react_to_key)
+        self.canvas.bind_all("<Key>", self.keydown)
         
         self.characters = []
         self.blocks = []
+        
+        self.left = False
+        self.right = False
+        self.up = False
         
         self.gravity = 0
         self.running = False
@@ -39,6 +43,7 @@ class Game():
     def add(self, object):
         if isinstance(object, Character):
             object.canvas = self.canvas
+            object.game = self
             self.characters.append(object)
         elif isinstance(object, Block):
             object.canvas = self.canvas
@@ -51,6 +56,12 @@ class Game():
             block.draw()
         self.running = True
         while self.running:
+            if self.left:
+                self.onkeyleft()
+            if self.right:
+                self.onkeyright()
+            if self.up:
+                self.onkeyup()
             for character in self.characters:
                 character.move(0, character.movementY)
                 #TODO: let character stop falling if it is standing on a block
@@ -60,14 +71,24 @@ class Game():
             time.sleep(0.01)
     
     #when key is pressed
-    def react_to_key(self, event):
+    def keydown(self, event):
         key = event.keysym
         if key == "Left":
-            self.onkeyleft()
+            self.left = True
         elif key == "Right":
-            self.onkeyright()
+            self.right = True
         elif key == "Up":
-            self.onkeyup()
+            self.up = True
+    
+    #when key is released
+    def keyup(self, event):
+        key = event.keysym
+        if key == "Left":
+            self.left = False
+        elif key == "Right":
+            self.right = False
+        elif key == "Up":
+            self.up = False
     
     #keybinds
     def onkeyleft(self):
@@ -95,19 +116,12 @@ class Game():
             return func
         return bind
 
-class Player(Character):
-    def __init__(self, path, type="static"):
-        if players == 0:
-            super().__init__(path, type)
-            players += 1
-        else:
-            raise ModuleError("You can only define one player.")
-
 #character class
 class Character():
     def __init__(self, path, type="static"):
         self.x = 0
         self.y = 0
+        self.game = None
         self.movementY = 0
         self.canvas = None
         if type == "static":
@@ -133,7 +147,7 @@ class Character():
     def move(self, moveX, moveY):
         if self.canvas:
             self.canvas.move(self.image, moveX, moveY)
-    
+
     def draw(self):
         if self.canvas:
             self.image = self.canvas.create_image(self.x, self.y, anchor=NW, image=self.tatras)
@@ -141,6 +155,24 @@ class Character():
     #game methods
     def jump(self):
         self.movementY = -15
+
+class Player(Character):
+    def __init__(self, path, type="static"):
+        if players == 0:
+            super().__init__(path, type)
+            players += 1
+        else:
+            raise ModuleError("You can only define one player.")
+    def move(self, moveX, moveY):
+        if self.canvas:
+            if self.game.screenType == "fixed":
+                self.canvas.move(self.image, moveX, moveY):
+            elif self.game.screenType == "scrolling":
+                #let all other things move
+                for character in self.game.characters:
+                    character.move(-moveX, -moveY)
+                for block in self.game.blocks:
+                    block.move(-moveX, -moveY)
 
 #block class
 class Block():

@@ -4,9 +4,9 @@ A python library that helps making 2d games.
 Python already has a great built-in library for graphics, tkinter, but there aren't many tools to create a 2d game. This library will contain functions to write simple games in a few lines of code.
 # installation
 To install this library, you can clone this repository or you can install it with pip via:
-'''
+```
 pip install python2d
-'''
+```
 # goal
 The goal is to make it easy for everyone to create 2d games in python, without having to calculate everthing yourself. Here are the most of the current possibilities:
 

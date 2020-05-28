@@ -51,8 +51,8 @@ game.run()
 # Updates
 
 - 05/27/2020: Most things discussed in goal work.
+- 05/28/2020: Added scrolling screen and reduced lag, not debugged yet.
 
 # Coming soon
 
-- Scrolling screen
 - Moving blocks

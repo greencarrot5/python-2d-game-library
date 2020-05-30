@@ -15,13 +15,23 @@ game.run()
 ```
 The code does the following:
 
-    - Python2d is imported
-    - An instance of Game is created. Its title is set to "Title"
-    - The game loop starts
+- Python2d is imported
+- An instance of Game is created. Its title is set to "Title"
+- The game loop starts
 
 If you use this script, the game loop's only function is to update the screen repeatedly. Nothing will change, no matter how long you wait.
 For change, we need characters.
 
 ## characters
+
+You can easily create characters with this line of code:
+```python
+character = Game.createCharacter("image.png")
+```
+Mention that Game is the name of the class, and not the name of the object.
+To let this work without errors, you need an image called "image.png" in the folder where your game file is.
+You can let them move with character.move(x, y).
+
+## key events
 
 Coming soon!
